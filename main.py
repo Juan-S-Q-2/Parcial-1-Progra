@@ -1,15 +1,32 @@
-import api  # Importa el módulo completo
-from ui import mostrar_resultados  # Importa la función para mostrar los datos
+from api import create_client, fetch_raw_data, filter_data
+from ui import display_table
 
-def main():
-    departamento = input("Ingrese el nombre del departamento a consultar: ").strip().upper()
-    limite = int(input("Ingrese el número de registros a consultar: "))
+def get_user_input():
+    while True:
+        try:
+            department = input("Ingrese el nombre del departamento: ").strip().upper()
+            if not department:
+                print("Error: El departamento no puede estar vacío.")
+                continue
 
-    # Llamar a la función de api.py
-    datos = api.obtener_datos(departamento, limite)
+            limit = int(input("Ingrese el número de registros a consultar (1-100): "))
+            if limit < 1 or limit > 100:
+                print("Error: El número debe ser mayor que 0 y menor o igual a 100.")
+                continue
 
-    # Mostrar los datos en formato de tabla
-    mostrar_resultados(datos)
+            return department, limit
+        except ValueError:
+            print("Error: Ingrese un número válido.")
+
+def run_app():
+    print("=== Consulta de Datos de COVID-19 ===")
+    department, limit = get_user_input()
+
+    client = create_client()
+    raw_data = fetch_raw_data(client, department, limit)
+    filtered_data = filter_data(raw_data)
+
+    display_table(filtered_data)
 
 if __name__ == "__main__":
-    main()
+    run_app()
