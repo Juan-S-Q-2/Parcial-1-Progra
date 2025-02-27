@@ -1,7 +1,6 @@
 from tabulate import tabulate
 
 def display_table(data):
-    """Muestra los datos en una tabla formateada."""
     if not data:
         print("No se encontraron datos para mostrar.")
         return
