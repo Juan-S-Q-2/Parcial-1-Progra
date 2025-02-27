@@ -1,25 +1,22 @@
 from tabulate import tabulate
 
-def mostrar_resultados(datos):
-    """Muestra los resultados en formato de tabla."""
-    if not datos:
-        print("No se encontraron resultados.")
+def display_table(data):
+    """Muestra los datos en una tabla formateada."""
+    if not data:
+        print("No se encontraron datos para mostrar.")
         return
 
-    # Seleccionar solo las columnas necesarias
-    tabla = []
-    for r in datos:
-        tabla.append([
-            r.get("ciudad_municipio_nom", "N/A").upper(),
-            r.get("departamento_nom", "N/A").upper(),
-            r.get("edad", "N/A"),
-            r.get("fuente_tipo_contagio", "N/A"),
-            r.get("estado", "N/A")
+    table_data = []
+    for entry in data:
+        table_data.append([
+            entry.get("ciudad", "N/A"),
+            entry.get("departamento", "N/A"),
+            entry.get("edad", "N/A"),
+            entry.get("tipo_contagio", "N/A"),
+            entry.get("estado", "N/A")
         ])
 
-    # Definir los encabezados
-    encabezados = ["Ciudad", "Departamento", "Edad", "Tipo de Contagio", "Estado"]
+    headers = ["Ciudad", "Departamento", "Edad", "Tipo de Contagio", "Estado"]
 
-    # Imprimir la tabla formateada
-    print("\nResultados de la consulta:\n")
-    print(tabulate(tabla, headers=encabezados, tablefmt="grid"))
+    print("\n--- Resultados de la Consulta ---\n")
+    print(tabulate(table_data, headers=headers, tablefmt="grid"))
